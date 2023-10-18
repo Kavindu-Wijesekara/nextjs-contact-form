@@ -2,6 +2,7 @@ import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import MessengerChat from '@/components/MessengerChat'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <Toaster />
+        <MessengerChat />
       </body>
     </html>
   )

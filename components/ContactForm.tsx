@@ -18,24 +18,13 @@ import { Textarea } from "./ui/textarea"
 import { useToast } from "./ui/use-toast"
 import ReCAPTCHA from "react-google-recaptcha"
 import { RefObject, useRef } from "react"
+import { contactFormSchema } from "@/lib/utils"
 
 const ContactForm = () => {
   const { toast } = useToast()
-  const recaptcha: RefObject<ReCAPTCHA> = useRef(null)
+  const recaptchaRef: RefObject<ReCAPTCHA> = useRef(null)
 
-
-  const formScehema = z.object({
-    firstName: z.string().min(1, "First name is required").trim(),
-    lastName: z.string().min(1, "Last name is required").trim(),
-    company: z.string().trim().optional(),
-    email: z.string().email("Invalid email address").min(1, "Email is required").trim(),
-    phone: z.string().regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number").min(1, "Phone is required").trim(),
-    subject: z.string().max(100, "Subject is too long").trim().optional(),
-    message: z.string().min(1, "Message is required").trim(),
-    recaptcha: z.string().min(1, "Recaptcha is required").trim(),
-  })
-
-  const form = useForm<z.infer<typeof formScehema>>({
+  const form = useForm<z.infer<typeof contactFormSchema>>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -47,10 +36,10 @@ const ContactForm = () => {
       recaptcha: "",
     },
     mode: "onChange",
-    resolver: zodResolver(formScehema),
+    resolver: zodResolver(contactFormSchema),
   })
 
-  async function onSubmit(values: z.infer<typeof formScehema>) {
+  async function onSubmit(values: z.infer<typeof contactFormSchema>) {
 
     const response = await fetch('/api/contact-form', {
       method: 'POST',
@@ -89,7 +78,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="p-5 bg-blue-300 rounded-md w-[30rem]">
+    <div className="p-5 bg-blue-300 rounded-md w-full lg:w-[20rem]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -138,7 +127,7 @@ const ContactForm = () => {
               <FormItem>
                 <FormLabel></FormLabel>
                 <FormControl>
-                  <Input placeholder="Email" {...field} autoComplete="on" />
+                  <Input type="email" placeholder="Email" {...field} autoComplete="on" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -151,7 +140,7 @@ const ContactForm = () => {
               <FormItem>
                 <FormLabel></FormLabel>
                 <FormControl>
-                  <Input placeholder="Phone number" {...field} autoComplete="on" />
+                  <Input type="tel" placeholder="Phone number" {...field} autoComplete="on" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,7 +182,7 @@ const ContactForm = () => {
                     size="normal"
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                     onChange={onCaptchaChange}
-                    ref={recaptcha}
+                    ref={recaptchaRef}
                     className="w-full mt-2"
                   />
                 </FormControl>

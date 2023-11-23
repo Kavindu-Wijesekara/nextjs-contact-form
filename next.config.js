@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    experimental: {
+        serverComponentsExternalPackages: [
+            '@react-email/components',
+        ]
+    }
+}
 
 module.exports = nextConfig

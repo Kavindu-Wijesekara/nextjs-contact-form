@@ -114,18 +114,26 @@ const PartnerRegistration = () => {
             const dataUploadResponseJson = await dataUploadResponse.json()
 
             if (dataUploadResponse.ok) {
-                const sendMailsResponse = await handleApiCall(
-                    'send-resend', values
+
+                const regMailsResponse = await handleApiCall(
+                    'send-reg-email', values
                 )
 
-                const sendMailsResponseJson = await sendMailsResponse.json()
+                const regMailsResponseJson = await regMailsResponse.json()
 
-                if (sendMailsResponse.ok) {
+                if (regMailsResponse.ok) {
+
+                    const confMailResponse = await handleApiCall(
+                        'send-conf-email', values
+                    )
+
+                    const confMailResponseJson = await confMailResponse.json()
+
                     setIsSubmitingDone(false)
                     // form.reset()
                     return toast({
                         variant: "success",
-                        title: sendMailsResponseJson.message,
+                        title: regMailsResponseJson.message,
                     })
                 } else {
                     const deleteData = await fetch('/api/delete-uploaded-data', {
@@ -141,7 +149,7 @@ const PartnerRegistration = () => {
                     setIsSubmitingDone(false)
                     return toast({
                         variant: "destructive",
-                        title: sendMailsResponseJson.message,
+                        title: regMailsResponseJson.message,
                     })
                 }
             } else {

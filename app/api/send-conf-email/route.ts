@@ -4,94 +4,62 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(request: NextRequest) {
-  console.time("resendMail");
+    console.time("confirmationMail");
 
-  try {
-    const formData = await request.json()
-    const modifiedRegistrationNumber = formData.companyRegistrationNumber.replace("/", "_")
+    try {
+        const formData = await request.json()
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+        const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const attachments = [
-      {
-        filename: `${modifiedRegistrationNumber}_BRC.pdf`,
-        path: formData.brc,
-      },
-      {
-        filename: `${modifiedRegistrationNumber}_IDs.pdf`,
-        path: formData.ids,
-      },
-    ];
+        const responseConfirmation = await resend.emails.send({
+            from: `Auxano Worldwide <${process.env.EMAIL_USER}>`,
+            reply_to: 'hello@auxanoww.com',
+            to: formData.email, // Send the confirmation email to the user who submitted the form
+            subject: `Partner Registration Submission Confirmation`,
+            react: ConfirmationEmail(formData.fullName),
+        })
 
-    if (formData.form120) {
-      attachments.push({
-        filename: `${modifiedRegistrationNumber}_Form120.pdf`,
-        path: formData.form120,
-      });
+        console.log('Confirmation email response:', responseConfirmation);
+        if (responseConfirmation.data != null) {
+            console.timeEnd("confirmationMail");
+            return NextResponse.json({ message: "Form submitted successfully." }, { status: 200 })
+        } else {
+            console.timeEnd("confirmationMail");
+            return NextResponse.json({ message: "Somthing went wrong. Please try again later." }, { status: 500 })
+        }
+    } catch (error) {
+        return NextResponse.json({ error: "Error sending email" }, { status: 500 })
     }
-
-    const sendRegEmail = resend.emails.send({
-      from: `Partner Registration Submission <${process.env.EMAIL_USER}>`,
-      to: 'kavindu@indexone.tech',
-      subject: `New Partner Registration Submission - ${formData.companyName}`,
-      react: RegistrationDetailsEmail(formData),
-    });
-    const sendConEmail = resend.emails.send({
-      from: `Auxano Worldwide <${process.env.EMAIL_USER}>`,
-      reply_to: 'hello@auxanoww.com',
-      to: formData.email, // Send the confirmation email to the user who submitted the form
-      subject: `Partner Registration Submission Confirmation`,
-      react: ConfirmationEmail(formData.fullName),
-    });
-
-    const [responseRegister, responseConfirmation] = await Promise.all([
-      sendRegEmail,
-      sendConEmail,
-    ])
-
-
-    console.log('Registration email response:', responseRegister);
-    console.log('Confirmation email response:', responseConfirmation);
-    if (responseRegister.data != null && responseConfirmation.data != null) {
-      console.timeEnd("resendMail");
-      return NextResponse.json({ message: "Form submitted successfully." }, { status: 200 })
-    } else {
-      console.timeEnd("resendMail");
-      return NextResponse.json({ message: "Somthing went wrong. Please try again later." }, { status: 500 })
-    }
-  } catch (error) {
-    return NextResponse.json({ error: "Error sending email" }, { status: 500 })
-  }
 
 }
 
 const registartionMailTemplate = (
-  companyName: string,
-  companyRegistrationNumber: string,
-  businessType: string,
-  address: string,
-  city: string,
-  state: string,
-  country: string,
-  postalCode: string,
-  brc: any,
-  ids: any,
-  form120: any,
-  tier: string,
-  forcusedProducts: string[],
-  fullName: string,
-  email: string,
-  phone: string,
-  message: string,
-  salesName: string | '',
-  salesEmail: string | '',
-  salesPhone: string | '',
-  techName: string | '',
-  techEmail: string | '',
-  techPhone: string | '',
-  billingName: string | '',
-  billingEmail: string | '',
-  billingPhone: string | ''
+    companyName: string,
+    companyRegistrationNumber: string,
+    businessType: string,
+    address: string,
+    city: string,
+    state: string,
+    country: string,
+    postalCode: string,
+    brc: any,
+    ids: any,
+    form120: any,
+    tier: string,
+    forcusedProducts: string[],
+    fullName: string,
+    email: string,
+    phone: string,
+    message: string,
+    salesName: string | '',
+    salesEmail: string | '',
+    salesPhone: string | '',
+    techName: string | '',
+    techEmail: string | '',
+    techPhone: string | '',
+    billingName: string | '',
+    billingEmail: string | '',
+    billingPhone: string | ''
 ) => `
 <html lang="en">
   <body style="width:100%">
@@ -169,12 +137,12 @@ const registartionMailTemplate = (
         <td style=""><a href="${ids}" target="_blank">Download</a></td>
       </tr>
       ${form120 !== "" ?
-    `
+        `
         <tr>
         <th style="text-align: left; ">Form 1/20 File</th>
         <td style=""><a href="${form120}" target="_blank">Download</a></td>
       </tr>` : ''
-  }
+    }
       <tr style="background-color: #6666;">
         <th colspan="2">
           Applicant Information
@@ -197,7 +165,7 @@ const registartionMailTemplate = (
         <td style="">${message}</td>
       </tr>
       ${(salesName || salesEmail || salesPhone) &&
-  `
+    `
         <tr style="background-color: #6666;">
         <th colspan="2">
           Sales/Marketing Contact Information
@@ -216,9 +184,9 @@ const registartionMailTemplate = (
             <td style="">${salesPhone}</td>
         </tr>
         `
-  }
+    }
     ${(techName || techEmail || techPhone) &&
-  `
+    `
         <tr style="background-color: #6666;">
         <th colspan="2">
           Technical Contact Information
@@ -237,9 +205,9 @@ const registartionMailTemplate = (
             <td style="">${techPhone}</td>
         </tr>
         `
-  }
+    }
       ${(billingName || billingEmail || billingPhone) &&
-  `
+    `
         <tr style="background-color: #6666;">
         <th colspan="2">
           Billing Contact Information
@@ -258,7 +226,7 @@ const registartionMailTemplate = (
             <td style="">${billingPhone}</td>
         </tr>
         `
-  }
+    }
     </table>
   </body>
 </html>

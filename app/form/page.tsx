@@ -122,19 +122,32 @@ const PartnerRegistration = () => {
                 const regMailsResponseJson = await regMailsResponse.json()
 
                 if (regMailsResponse.ok) {
-
-                    const confMailResponse = await handleApiCall(
-                        'send-conf-email', values
-                    )
-
-                    const confMailResponseJson = await confMailResponse.json()
-
-                    setIsSubmitingDone(false)
-                    // form.reset()
-                    return toast({
-                        variant: "success",
-                        title: regMailsResponseJson.message,
-                    })
+                    handleApiCall('send-conf-email', values)
+                        .then(confMailResponse => {
+                            setIsSubmitingDone(false);
+                            // form.reset();
+                            toast({
+                                variant: "success",
+                                title: regMailsResponseJson.message,
+                            });
+                        })
+                        .catch(async error => {
+                            await fetch('/api/delete-uploaded-data', {
+                                method: 'DELETE',
+                                body: JSON.stringify(dataUploadResponseJson.docId),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Access-Control-Allow-Origin': '*',
+                                    'Access-Control-Allow-Methods': 'DELETE',
+                                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                                }
+                            })
+                            setIsSubmitingDone(false)
+                            return toast({
+                                variant: "destructive",
+                                title: "Something went wrong. Please try again later.",
+                            })
+                        });
                 } else {
                     const deleteData = await fetch('/api/delete-uploaded-data', {
                         method: 'DELETE',

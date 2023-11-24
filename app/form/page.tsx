@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn, handleApiCall, unionSchema } from "@/lib/utils"
+import { cleanAndUppercase, cn, handleApiCall } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
 import { RefObject, useRef, useState } from "react"
 import { Loader2 } from "lucide-react"
@@ -15,6 +15,7 @@ import { checkDocumentExists, uploadFile } from "@/firebase/firebaseClientFuncti
 import CompanyDetails from "@/components/widgets/forms/CompanyDetails";
 import ApplicatInfo from "@/components/widgets/forms/ApplicatInfo";
 import OthersInfo from "@/components/widgets/forms/OthersInfo";
+import { unionSchema } from "@/lib/schemas";
 
 
 
@@ -61,7 +62,7 @@ const PartnerRegistration = () => {
     })
 
     const onSubmit = async (values: z.infer<typeof unionSchema>) => {
-        const modifiedRegistrationNumber = values.companyRegistrationNumber.replace("/", "_")
+        const modifiedRegistrationNumber = cleanAndUppercase(values.companyRegistrationNumber)
 
         const brcFileName = `${modifiedRegistrationNumber}_BR.pdf`
         const idsFileName = `${modifiedRegistrationNumber}_ID.pdf`

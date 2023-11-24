@@ -1,0 +1,33 @@
+<mjml>
+  <mj-body background-color="#AA1BAA">
+    <mj-section>
+      <mj-column background-color="#fff" border-radius="5px" padding="5px">
+
+        <mj-image width="80px" src="https://i.ibb.co/S5XNMBv/aww-logo-clr.png"></mj-image>
+
+        <mj-text font-size="20px" color="#AA1BAA" align="center" font-family="helvetica">Thank You for Registering with Us!</mj-text>
+
+        <mj-divider border-color="#AA1BAA" border-width="1px"></mj-divider>
+        <mj-text font-size="14px" font-family="helvetica">Hello ${fullName},</mj-text>
+
+        <mj-text font-size="14px" font-family="helvetica" line-height="16px">
+          Thank you for submitting your partner registration form. We have received your information and will review it promptly. Your interest in partnering with us is greatly appreciated.
+        </mj-text>
+        <mj-text font-size="14px" font-family="helvetica" line-height="16px">
+          If you have any questions or require further assistance, please feel free to contact us at <a href="mailto:hello@auxanoww.com" color="#AA1BAA"> hello@auxanoww.com</a>. We will be in touch as soon as we&apos;ve reviewed your submission.
+        </mj-text>
+        <mj-text font-size="14px" font-family="helvetica" line-height="16px">
+          Thank you for considering a partnership with us. We look forward to the opportunity of working together.
+         <br/> <br/>Best regards,<br/><i>Team Auxano</i>
+        </mj-text>
+
+        <mj-divider border-color="#AA1BAA" border-width="1px"></mj-divider>
+
+        <mj-text font-size="12px" font-family="helvetica" align="center" color="#666">
+          © 2023 Auxano Worldwide Ltd. 262 Kaduwela Rd, Koswatta, Battaramulla, SL 10120
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

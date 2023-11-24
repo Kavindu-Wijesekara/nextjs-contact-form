@@ -18,7 +18,7 @@ import { Textarea } from "./ui/textarea"
 import { useToast } from "./ui/use-toast"
 import ReCAPTCHA from "react-google-recaptcha"
 import { RefObject, useRef } from "react"
-import { contactFormSchema } from "@/lib/utils"
+import { contactFormSchema } from "@/lib/schemas"
 
 const ContactForm = () => {
   const { toast } = useToast()

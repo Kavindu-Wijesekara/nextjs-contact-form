@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "./firebaseConfig";
 import { deleteObject, getDownloadURL, listAll, ref, uploadBytesResumable } from "firebase/storage";
+import { cleanAndUppercase } from "@/lib/utils";
 
 export async function checkDocumentExists(companyRegistrationNumber: string) {
     const docRef = doc(collection(db, "partners"), companyRegistrationNumber)
@@ -16,7 +17,7 @@ export async function checkDocumentExists(companyRegistrationNumber: string) {
 
 export async function addData(formData: any) {
     const { companyRegistrationNumber } = formData
-    const modifiedCompanyRegistrationNumber = companyRegistrationNumber.replace("/", "_")
+    const modifiedCompanyRegistrationNumber = cleanAndUppercase(companyRegistrationNumber)
 
     try {
         const docRef = doc(collection(db, "partners"), modifiedCompanyRegistrationNumber)

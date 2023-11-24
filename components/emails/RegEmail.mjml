@@ -1,0 +1,157 @@
+<mjml>
+  <mj-body background-color="#fff">
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="20px" align="center" font-family="helvetica">Partner Registration - ${companyName}</mj-text>
+        <!-- Company details -->
+        <mj-table>
+          <tr style="border-bottom:1px solid #666;text-align:left;padding:15px 0;">
+            <th colspan="2" style="padding: 0 15px 0 0;font-size: 16px;" align="center">Company Details</th>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0; font-weight:500;">Company Name</td>
+            <td style="padding: 0 15px;">${companyName}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style='padding: 0 15px 0 0;font-weight:500;'>Business Registration No</td>
+            <td style="padding: 0 15px;">${companyRegistrationNumber}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Business Type</td>
+            <td style="padding: 0 15px;">${businessType}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Address</td>
+            <td style="padding: 0 15px;">${address}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">City</td>
+            <td style="padding: 0 15px;">${city}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">State/Province</td>
+            <td style="padding: 0 15px;">${state}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Country</td>
+            <td style="padding: 0 15px;">${country}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Postal Code</td>
+            <td style="padding: 0 15px;">${postalCode}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Tier</td>
+            <td style="padding: 0 15px;">${tier}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Forcused Product/s</td>
+            <td style="padding: 0;">
+              <ul>
+                ${forcusedProducts.map(product => `
+                <li>${product}</li>
+                `).join('')}
+              </ul>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Business Registration File</td>
+            <td style="padding: 0 15px;"><a href="${brc}" target="_blank">Download BR</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Id Copies File</td>
+            <td style="padding: 0 15px;"><a href="${ids}" target="_blank">Download Ids</a></td>
+          </tr>
+          ${
+          form120 !== "" ?
+          `<tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Form 1/20 File</td>
+            <td style="padding: 0 15px;"><a href="${form120}" target="_blank">Download Form1/20</a></td>
+          </tr>` : ''
+          }
+        </mj-table>
+
+        <!-- Applicant details -->
+        <mj-table>
+          <tr style="border-bottom:1px solid #666;text-align:left;padding:15px 0;">
+            <th colspan="2" style="padding: 0 15px 0 0;font-size: 16px;" align="center">Applicant Contact Details</th>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0; font-weight:500;">Full Name</td>
+            <td style="padding: 0 15px;">${fullName}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style='padding: 0 15px 0 0;font-weight:500;'>Email</td>
+            <td style="padding: 0 15px;">${email}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Phone</td>
+            <td style="padding: 0 15px;">${phone}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Remarks</td>
+            <td style="padding: 0 15px;">${message}</td>
+          </tr>
+        </mj-table>
+
+        <!-- Sales details -->
+        <mj-table>
+          <tr style="border-bottom:1px solid #666;text-align:left;padding:15px 0;">
+            <th colspan="2" style="padding: 0 15px 0 0;font-size: 16px;" align="center">Sales/Marketing Contact Details </th>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0; font-weight:500;">Full Name</td>
+            <td style="padding: 0 15px;">${salesName}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style='padding: 0 15px 0 0;font-weight:500;'>Email</td>
+            <td style="padding: 0 15px;">${salesEmail}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Phone</td>
+            <td style="padding: 0 15px;">${salesPhone}</td>
+          </tr>
+        </mj-table>
+
+        <!-- Technical details -->
+        <mj-table>
+          <tr style="border-bottom:1px solid #666;text-align:left;padding:15px 0;">
+            <th colspan="2" style="padding: 0 15px 0 0;font-size: 16px;" align="center">Technical Contact Details </th>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0; font-weight:500;">Full Name</td>
+            <td style="padding: 0 15px;">${techName}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style='padding: 0 15px 0 0;font-weight:500;'>Email</td>
+            <td style="padding: 0 15px;">${techEmail}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Phone</td>
+            <td style="padding: 0 15px;">${techPhone}</td>
+          </tr>
+        </mj-table>
+
+        <!-- Billing details -->
+        <mj-table>
+          <tr style="border-bottom:1px solid #666;text-align:left;padding:15px 0;">
+            <th colspan="2" style="padding: 0 15px 0 0;font-size: 16px;" align="center">Billing Contact Details </th>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0; font-weight:500;">Full Name</td>
+            <td style="padding: 0 15px;">${billingName}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style='padding: 0 15px 0 0;font-weight:500;'>Email</td>
+            <td style="padding: 0 15px;">${billingEmail}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Phone</td>
+            <td style="padding: 0 15px;">${billingPhone}</td>
+          </tr>
+        </mj-table>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

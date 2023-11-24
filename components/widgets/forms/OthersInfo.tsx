@@ -13,7 +13,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex flex-wrap items-center gap-2 leading-5 text-black dark:text-white">
-                                    First & Last Name: <FormMessage />
+                                    First & Last Name (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -32,7 +32,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Email: <FormMessage />
+                                    Email (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -51,7 +51,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Phone Number: <FormMessage />
+                                    Phone Number (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -77,7 +77,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex flex-wrap items-center gap-2 leading-5 text-black dark:text-white">
-                                    First & Last Name: <FormMessage />
+                                    First & Last Name (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -96,7 +96,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Email: <FormMessage />
+                                    Email (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -115,7 +115,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Phone Number: <FormMessage />
+                                    Phone Number (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -141,7 +141,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex flex-wrap items-center gap-2 leading-5 text-black dark:text-white">
-                                    First & Last Name: <FormMessage />
+                                    First & Last Name (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -160,7 +160,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Email: <FormMessage />
+                                    Email (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input
@@ -179,7 +179,7 @@ const OthersInfo = ({ form }: any) => {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-bold flex items-center gap-2 leading-5 text-black dark:text-white">
-                                    Phone Number: <FormMessage />
+                                    Phone Number (Required): <FormMessage />
                                 </FormLabel>
                                 <FormControl>
                                     <Input

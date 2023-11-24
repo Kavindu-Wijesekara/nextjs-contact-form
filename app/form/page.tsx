@@ -101,6 +101,7 @@ const PartnerRegistration = () => {
                     values.form120 = ""
                 }
             } catch (error) {
+                setIsSubmitingDone(false);
                 return toast({
                     variant: "destructive",
                     title: "Error occured",
@@ -129,7 +130,7 @@ const PartnerRegistration = () => {
                             // form.reset();
                             toast({
                                 variant: "success",
-                                title: regMailsResponseJson.message,
+                                title: "Form submitted successfully!, We will get back to you soon after reviewing your application.",
                             });
                         })
                         .catch(async error => {

@@ -41,6 +41,7 @@ const ApplicatInfo = ({ form }: any) => {
                                         {...field}
                                         autoComplete="on"
                                         autoCapitalize="on"
+                                        type='email'
                                     />
                                 </FormControl>
                             </FormItem>

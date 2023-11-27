@@ -134,7 +134,7 @@ const PartnerRegistration = () => {
                             });
                         })
                         .catch(async error => {
-                            await fetch('/api/delete-uploaded-data', {
+                            fetch('/api/delete-uploaded-data', {
                                 method: 'DELETE',
                                 body: JSON.stringify(dataUploadResponseJson.docId),
                                 headers: {
@@ -151,7 +151,7 @@ const PartnerRegistration = () => {
                             })
                         });
                 } else {
-                    const deleteData = await fetch('/api/delete-uploaded-data', {
+                    fetch('/api/delete-uploaded-data', {
                         method: 'DELETE',
                         body: JSON.stringify(dataUploadResponseJson.docId),
                         headers: {
@@ -164,11 +164,11 @@ const PartnerRegistration = () => {
                     setIsSubmitingDone(false)
                     return toast({
                         variant: "destructive",
-                        title: regMailsResponseJson.message,
+                        title: "Something went wrong. Please try again later.",
                     })
                 }
             } else {
-                await fetch('/api/delete-uploaded-data', {
+                fetch('/api/delete-uploaded-data', {
                     method: 'DELETE',
                     body: JSON.stringify(dataUploadResponseJson.docId),
                     headers: {
@@ -181,7 +181,7 @@ const PartnerRegistration = () => {
                 setIsSubmitingDone(false)
                 return toast({
                     variant: "destructive",
-                    title: dataUploadResponseJson.message,
+                    title: "Something went wrong. Please try again later.",
                 })
             }
         } else {

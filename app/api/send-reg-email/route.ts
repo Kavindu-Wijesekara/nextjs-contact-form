@@ -61,7 +61,8 @@ export async function POST(request: NextRequest) {
         formData.billingName,
         formData.billingEmail,
         formData.billingPhone,
-      )
+      ),
+      attachments: attachments,
     });
 
 

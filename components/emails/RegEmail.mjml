@@ -44,6 +44,15 @@
             <td style="padding: 0 15px 0 0;font-weight:500;">Tier</td>
             <td style="padding: 0 15px;">${tier}</td>
           </tr>
+          ${
+          customTarget !== "" ?
+          `
+          <tr style="border-bottom:1px solid #666;">
+            <td style="padding: 0 15px 0 0;font-weight:500;">Custom Sale Target(Annual)</td>
+            <td style="padding: 0 15px;">${customTarget}</td>
+          </tr>
+          ` : ""
+          }
           <tr style="border-bottom:1px solid #666;">
             <td style="padding: 0 15px 0 0;font-weight:500;">Forcused Product/s</td>
             <td style="padding: 0;">

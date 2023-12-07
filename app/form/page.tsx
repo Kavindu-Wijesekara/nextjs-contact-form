@@ -15,8 +15,8 @@ import { checkDocumentExists, uploadFile } from "@/firebase/firebaseClientFuncti
 import CompanyDetails from "@/components/widgets/forms/CompanyDetails";
 import ApplicatInfo from "@/components/widgets/forms/ApplicatInfo";
 import OthersInfo from "@/components/widgets/forms/OthersInfo";
-import { unionSchema } from "@/lib/schemas";
-
+import { fullSchema } from "@/lib/schemas";
+import TiersProducts from "@/components/widgets/forms/TiersProducts";
 
 
 const PartnerRegistration = () => {
@@ -26,7 +26,7 @@ const PartnerRegistration = () => {
     const recaptchaRef: RefObject<ReCAPTCHA> = useRef(null)
 
 
-    const form = useForm<z.infer<typeof unionSchema>>({
+    const form = useForm<z.infer<typeof fullSchema>>({
         defaultValues: {
             companyName: '',
             companyRegistrationNumber: '',
@@ -40,6 +40,7 @@ const PartnerRegistration = () => {
             ids: undefined,
             form120: undefined,
             tier: undefined,
+            customTarget: '',
             forcusedProducts: [],
             fullName: '',
             email: '',
@@ -58,10 +59,10 @@ const PartnerRegistration = () => {
             accept: false
         },
         mode: 'onChange',
-        resolver: zodResolver(unionSchema)
+        resolver: zodResolver(fullSchema)
     })
 
-    const onSubmit = async (values: z.infer<typeof unionSchema>) => {
+    const onSubmit = async (values: z.infer<typeof fullSchema>) => {
         const modifiedRegistrationNumber = cleanAndUppercase(values.companyRegistrationNumber)
 
         const brcFileName = `${modifiedRegistrationNumber}_BR.pdf`
@@ -194,9 +195,40 @@ const PartnerRegistration = () => {
         }
     }
 
-    const formSubmit = (values: z.infer<typeof unionSchema>) => {
-        console.log(values);
+    const formSubmit = async (values: z.infer<typeof fullSchema>) => {
+
+        const req = await fetch('/api/form-submit', {
+            method: 'POST',
+            body: JSON.stringify(values),
+        })
+        const reqJson = await req.json()
+
+        console.log(reqJson);
+
+        const res = await fetch(`/api/form-submit/${reqJson.id}`);
+        const resJson = await res.json();
+
+        console.log(resJson);
+
+        // fetchDataWithDelay(5000, reqJson.id);
     }
+
+    // function fetchDataWithDelay(delay: any, id: string) {
+    //     setTimeout(async () => {
+    //         let state = '';
+
+    //         do {
+    //             const res = await fetch(`/api/form-submit/${id}`);
+    //             const resJson = await res.json();
+    //             state = resJson.state;
+
+    //             console.log(resJson);
+
+    //             // Add a delay before making the next request
+    //             await new Promise(resolve => setTimeout(resolve, delay));
+    //         } while (state !== 'succeed' && state !== 'failed');
+    //     }, delay);
+    // }
 
     const onCaptchaExpired = () => {
         form.setValue("recaptcha", "")
@@ -222,10 +254,22 @@ const PartnerRegistration = () => {
                 <div className="mt-12">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <h2 className="text-xl md:text-2xl font-bold leading-tight capitalize mt-3 mb-4 underline decoration-primary">Company Information</h2>
 
-                            <CompanyDetails form={form} />
-                            <ApplicatInfo form={form} />
+                            <div className="border border-primary rounded-[2.3rem] relative">
+                                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Company Information</h2>
+                                <CompanyDetails form={form} />
+                            </div>
+
+                            <div className="border border-primary rounded-[2.3rem] relative mt-8">
+                                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Tier & Forcused Products</h2>
+                                <TiersProducts form={form} />
+                            </div>
+
+                            <div className="border border-primary rounded-[2.3rem] relative mt-8">
+                                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Applicant Infomation</h2>
+                                <ApplicatInfo form={form} />
+                            </div>
+
                             <OthersInfo form={form} />
 
 

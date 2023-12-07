@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input"
 const OthersInfo = ({ form }: any) => {
     return (
         <>
-            <div className="my-7">
-                <h2 className="text-xl md:text-2xl font-bold leading-tight capitalize mt-3 mb-4 underline decoration-primary">Key Sales / Marketing Contact</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7">
+            <div className="border border-primary rounded-[2.3rem] relative mt-8">
+                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Key Sales / Marketing Contact</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7 px-5 md:px-10 md:py-4">
                     <FormField
                         control={form.control}
                         name="salesName"
@@ -68,9 +68,9 @@ const OthersInfo = ({ form }: any) => {
             </div>
 
             {/* Tech lead */}
-            <div className="my-7">
-                <h2 className="text-xl md:text-2xl font-bold leading-tight capitalize mt-3 mb-4 underline decoration-primary">Key Technical Contact</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7">
+            <div className="border border-primary rounded-[2.3rem] relative mt-8">
+                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Key Technical Contact</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7 px-5 md:px-10 md:py-4">
                     <FormField
                         control={form.control}
                         name="techName"
@@ -132,9 +132,9 @@ const OthersInfo = ({ form }: any) => {
             </div>
 
             {/* Billing lead */}
-            <div className="my-7">
-                <h2 className="text-xl md:text-2xl font-bold leading-tight capitalize mt-3 mb-4 underline decoration-primary">Key Billing Contact</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7">
+            <div className="border border-primary rounded-[2.3rem] relative mt-8">
+                <h2 className="text-base lg:text-xl text-primary leading-tight capitalize mb-4 inline-block absolute -mt-6 ml-8 p-2 bg-background">Key Billing Contact</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 my-7 px-5 md:px-10 md:py-4">
                     <FormField
                         control={form.control}
                         name="billingName"

@@ -13,7 +13,7 @@ body,
 :root {
   height: 100%;
   width: 100%;
-  background-color: #0a122a;
+  background-color: white;
 }
 
 @layer base {

@@ -1,21 +1,33 @@
 import * as z from 'zod'
 
 export const contactFormSchema = z.object({
-    firstName: z.string().min(1, "First name is required").trim(),
-    lastName: z.string().min(1, "Last name is required").trim(),
+    firstName: z.string().min(1, "First name is required.").trim(),
+    lastName: z.string().min(1, "Last name is required.").trim(),
     company: z.string().trim().optional(),
-    email: z.string().email("Invalid email address").min(1, "Email is required").trim(),
-    phone: z.string().regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number").min(1, "Phone is required").trim(),
-    subject: z.string().max(100, "Subject is too long").trim().optional(),
-    message: z.string().min(1, "Message is required").trim(),
-    recaptcha: z.string().min(1, "Recaptcha is required").trim(),
+    email: z.string().email("Invalid email address").min(1, "Email is required.").trim(),
+    phone: z.string().regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").min(1, "Phone is required.").trim(),
+    subject: z.string().max(100, "Subject is too long.").trim().optional(),
+    message: z.string().min(1, "Message is required.").trim(),
+    recaptcha: z.string().min(1, "Recaptcha is required.").trim(),
 })
+
+const nameSchema = z
+    .string()
+    .min(1, 'Name is required.').trim()
+    .refine((value) => {
+        const nameParts = value.split(' ')
+        return nameParts.length >= 2
+    }, 'Enter last name.')
+
+const emailSchema = z.string().min(1, "Email is required.").email({ message: 'Invalid email.' }).trim()
+
+const phoneSchema = z.string().min(1, "Phone is required.").regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").trim()
 
 
 export const formSchema = z.object({
     // company info
     companyName: z.string().min(1, 'Company Name is required.').trim(),
-    companyRegistrationNumber: z.string().min(1, 'Company Registration Number is required').trim(),
+    companyRegistrationNumber: z.string().min(1, 'Company Registration Number is required.').trim(),
     businessType: z.enum(["PVT Ltd", "Partnership", "Sole Proprietor"],
         { required_error: 'Business Type is required.' }),
 
@@ -43,59 +55,37 @@ export const formSchema = z.object({
 
     // tier info
     tier: z.enum(["Tier 1", "Tier 2", "Tier 3", "Tier 4", "Custom"],
-        { required_error: 'Please select a Tier.' }),
+        { required_error: 'Please select a Tier.', invalid_type_error: "Please select a Tier", }),
+
+    customTarget: z.string().trim().optional(),
 
     forcusedProducts: z.array(z.string()).refine((value) => value.some((item) => item), {
         message: 'At least one forcused product is required.'
     }),
 
     // user info
-    fullName: z
-        .string()
-        .min(1, 'Name is required.').trim()
-        .refine((value) => {
-            const nameParts = value.split(' ')
-            return nameParts.length >= 2
-        }, 'Enter last name.'),
-    email: z.string().min(1, "Email is required.").email({ message: 'Invalid email.' }).trim(),
-    phone: z.string().min(1, "Phone is required.").regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").trim(),
+    fullName: nameSchema,
+    email: emailSchema,
+    phone: phoneSchema,
     message: z.string().trim().optional(),
 
 
     // sales/marketing lead
-    salesName: z
-        .string()
-        .min(1, 'Name is required.').trim()
-        .refine((value) => {
-            const nameParts = value.split(' ')
-            return nameParts.length >= 2
-        }, 'Enter last name.'),
-    salesEmail: z.string().min(1, "Email is required.").email({ message: 'Invalid email.' }).trim(),
-    salesPhone: z.string().min(1, "Phone is required.").regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").trim(),
+    salesName: nameSchema,
+    salesEmail: emailSchema,
+    salesPhone: phoneSchema,
 
     // tech lead
-    techName: z
-        .string()
-        .min(1, 'Name is required.').trim()
-        .refine((value) => {
-            const nameParts = value.split(' ')
-            return nameParts.length >= 2
-        }, 'Enter last name.'),
-    techEmail: z.string().min(1, "Email is required.").email({ message: 'Invalid email.' }).trim(),
-    techPhone: z.string().min(1, "Phone is required.").regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").trim(),
+    techName: nameSchema,
+    techEmail: emailSchema,
+    techPhone: phoneSchema,
 
     // billing lead
-    billingName: z
-        .string()
-        .min(1, 'Name is required.').trim()
-        .refine((value) => {
-            const nameParts = value.split(' ')
-            return nameParts.length >= 2
-        }, 'Enter last name.'),
-    billingEmail: z.string().min(1, "Email is required.").email({ message: 'Invalid email.' }).trim(),
-    billingPhone: z.string().min(1, "Phone is required.").regex(/^(\+\d{1,3})?(\d{10})$/, "Invalid phone number.").trim(),
+    billingName: nameSchema,
+    billingEmail: emailSchema,
+    billingPhone: phoneSchema,
 
-    recaptcha: z.string().min(1, "Recaptcha is required").trim(),
+    recaptcha: z.string().min(1, "Recaptcha is required.").trim(),
 
     accept: z.boolean().refine(value => value === true, {
         message: 'You must accept the terms and privacy policy.'
@@ -103,7 +93,7 @@ export const formSchema = z.object({
 
 })
 
-export const unionSchema = z.discriminatedUnion("businessType", [
+export const businessSchema = z.discriminatedUnion("businessType", [
     z.object({
         businessType: z.literal("PVT Ltd"),
         form120: z
@@ -119,3 +109,22 @@ export const unionSchema = z.discriminatedUnion("businessType", [
         businessType: z.literal("Sole Proprietor"),
     }),
 ]).and(formSchema)
+
+export const fullSchema = z.discriminatedUnion("tier", [
+    z.object({
+        tier: z.literal("Tier 1"),
+    }),
+    z.object({
+        tier: z.literal("Tier 2"),
+    }),
+    z.object({
+        tier: z.literal("Tier 3"),
+    }),
+    z.object({
+        tier: z.literal("Tier 4"),
+    }),
+    z.object({
+        tier: z.literal("Custom"),
+        customTarget: z.string().min(1, "Custom sales target is required.").trim(),
+    }),
+]).and(businessSchema)

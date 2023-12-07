@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tiers, productCategories } from "@/data"
 import { cn } from "@/lib/utils"
-import { AlertCircle, Building2, HeartHandshake, User } from "lucide-react"
+import { AlertCircle, Building2, HeartHandshake, HelpCircle, User } from "lucide-react"
 
 const businessType = [
     {
@@ -29,7 +29,7 @@ const CompanyDetails = ({ form }: any) => {
     const idsFileRef = form.register('ids', { required: true })
     const form120FileRef = form.register('form120', { required: true })
     return (
-        <>
+        <div className="px-5 md:px-10 md:py-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-7 my-7">
                 <FormField
                     control={form.control}
@@ -83,7 +83,7 @@ const CompanyDetails = ({ form }: any) => {
                             <RadioGroup
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
-                                className="grid grid-cols-2 lg:grid-cols-3"
+                                className="grid grid-cols-1 lg:grid-cols-3"
                             >
                                 {
                                     businessType.map((item, index) => {
@@ -240,7 +240,7 @@ const CompanyDetails = ({ form }: any) => {
                         </FormControl>
                         <FormMessage />
                         <FormDescription>
-                            All directors ID copies should be submitted. Please combine all the ID copies into a single PDF file.
+                            Note: All directors ID copies should be submitted. Please combine all the ID copies into a single PDF file.
                         </FormDescription>
                     </FormItem>
                 )}
@@ -265,107 +265,7 @@ const CompanyDetails = ({ form }: any) => {
                     </FormItem>
                 )}
             />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-7 my-7">
-                {/* Tiers */}
-                <FormField
-                    control={form.control}
-                    name="tier"
-                    render={({ field }) => (
-                        <FormItem className="">
-                            <FormLabel className="font-bold flex items-center gap-2 text-black dark:text-white">
-                                Select a Tier (Required):
-                            </FormLabel>
-                            <FormMessage />
-                            <FormControl>
-                                <RadioGroup
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    className="grid grid-cols-1 md:grid-cols-2"
-                                >
-                                    {
-                                        Tiers.map((item, index) => (
-                                            <FormItem key={index} className="flex items-center space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value={item.id} className="peer hidden" />
-                                                </FormControl>
-                                                <FormLabel className="h-full w-full text-black dark:text-white cursor-pointer rounded-md border border-border p-4 shadow-sm hover:border-primary peer-aria-checked:border-primary peer-aria-checked:ring-ring flex justify-between items-center bg-muted-foreground/10 peer-aria-checked:bg-primary/20">
-                                                    <div className="flex flex-col">
-                                                        <span className="text-muted-foreground">{item.id}</span>
-                                                        <span className="font-bold">{item.title}</span>
-                                                    </div>
-                                                    <Popover>
-                                                        <PopoverTrigger><AlertCircle className=" cursor-help" /></PopoverTrigger>
-                                                        <PopoverContent>
-                                                            <div className="">
-                                                                {item.features.map((feature, index) => (
-                                                                    <div key={index}>
-                                                                        <p className="text-primary">{feature.title}:</p>
-                                                                        <p className="font-bold">{feature.description}</p>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </PopoverContent>
-                                                    </Popover>
-
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))
-                                    }
-                                </RadioGroup>
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
-
-                {/* Forcused products */}
-                <FormField
-                    control={form.control}
-                    name="forcusedProducts"
-                    render={() => (
-                        <FormItem className="">
-                            <FormLabel className="font-bold flex items-center gap-2 text-black dark:text-white">
-                                Forcused Products (Required):
-                            </FormLabel>
-                            <FormMessage />
-                            {productCategories.map((item) => (
-                                <FormField
-                                    key={item.id}
-                                    control={form.control}
-                                    name="forcusedProducts"
-                                    render={({ field }) => {
-                                        return (
-                                            <FormItem
-                                                key={item.id}
-                                                className="flex flex-row items-start space-x-3 space-y-0"
-                                            >
-                                                <FormControl>
-                                                    <Checkbox
-                                                        checked={field.value?.includes(item.id)}
-                                                        onCheckedChange={(checked) => {
-                                                            return checked
-                                                                ? field.onChange([...field.value, item.id])
-                                                                : field.onChange(
-                                                                    field.value?.filter(
-                                                                        (value: string) => value !== item.id
-                                                                    )
-                                                                )
-                                                        }}
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="font-semibold text-black dark:text-white">
-                                                    {item.title}
-                                                </FormLabel>
-                                            </FormItem>
-                                        )
-                                    }}
-                                />
-                            ))}
-                        </FormItem>
-                    )}
-                />
-            </div>
-        </>
+        </div>
     )
 }
 
